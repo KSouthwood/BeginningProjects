@@ -25,14 +25,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void fizzbuzz(int min, int max);
+
 /*
  *  Classic FizzBuzz problem wherein we print a sequence of numbers, replacing multiples of three
  *  with "Fizz", multiples of five with "Buzz" and multiples of three AND five with "FizzBuzz."
  */
 
-int main()
+/*
+ *  Main loop of program
+ *
+ *  argc - number of arguments provided to program
+ *  argv[] - array of arguments
+ */
+
+int main(int argc, char *argv[])
 {
-    for (int i = 1; i <= 100; i++)
+    switch (argc)
+    {
+        case 1:
+            fizzbuzz(1, 100);
+            break;
+        case 2:
+            fizzbuzz(1, atoi(argv[1]));
+            break;
+        case 3:
+            fizzbuzz(atoi(argv[1]), atoi(argv[2]));
+            break;
+        default:
+            printf("Usage: %s [max]\n", argv[0]);
+            printf("Usage: %s [min] [max]\n", argv[0]);
+            return 1;
+    }
+
+    printf("\n");
+    return 0;
+}
+
+void fizzbuzz(int min, int max)
+{
+    // for loop won't work if max is larger than min, swap values
+    if (min > max)  // min = 50, max = 15
+    {
+        printf("min was greater than max. Swapping.\n\n");
+        min = min + max;    // min = 65, max = 15
+        max = min - max;    // min = 65, max = 50
+        min = min - max;    // min = 15, max = 50
+    }
+
+    // we want to start counting from 1, not 0, so set min to 1
+    // TODO: remove if we want to handle negative ints and 0
+    if (min < 1)
+    {
+        printf("min must be 1 or greater. Setting min to 1.\n\n");
+        min = 1;
+    }
+
+    for (int i = min, count = 1; i <= max; i++, count++)
     {
         if (i % 15 == 0)
         {
@@ -51,15 +100,8 @@ int main()
             printf("%d", i);
         }
 
-        if (i % 10 != 0)
-        {
-            printf(", ");
-        }
-        else
-        {
-            printf("\n");
-        }
+        printf("%s", (count % 20) ? ", " : "\n");
     }
 
-    return 0;
+    return;
 }
