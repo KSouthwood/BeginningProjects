@@ -34,3 +34,13 @@
 *.cbp
 
 FizzBuzz/bin/
+
+*.layout
+
+*.depend
+
+VowelCount/bin/
+
+Fibonnaci/bin/
+
+\.metadata/

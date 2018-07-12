@@ -21,106 +21,71 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  *
  *  SOFTWARE.                                                                      *
  ***********************************************************************************/
-/*
- *  Uses libcs50 from Harvard's CS50 course, source found at https://github.com/cs50/libcs50.
- */
 
 /*
- *  Get a string from the user via stdin, then count all the vowels in it. Return the total number
- *  of vowels as well as breakdown by each one.
+ *  Calculate the fibonacci number from a given input, either from the command line
+ *  or asked for from the program.
  */
-
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>
 #include <cs50.h>
 
-struct vowels
-{
-    unsigned int a;
-    unsigned int e;
-    unsigned int i;
-    unsigned int o;
-    unsigned int u;
-    unsigned int sum;
-};
-
-void countVowels(char *phrase, struct vowels *vowel);
+long get_input(void);
+long calc_fib(long fib_max);
 
 int main(void)
 {
-    // define and initialize the struct
-    struct vowels counts;
-    counts.a = 0;
-    counts.e = 0;
-    counts.i = 0;
-    counts.o = 0;
-    counts.u = 0;
-    counts.sum = 0;
+    bool loop = true;
+    long num = 0;
 
-    // get the phrase from the user
-    char *phrase = get_string("Enter a string: ");
+    do
+    {
+        // get a number to calculate the fibonacci number to
+        num = get_input();
 
-    countVowels(phrase, &counts);
+        // if 0 is entered, quit
+        if (num == 0)
+        {
+            loop = false;
+            continue;
+        }
 
-    printf("\nThere are %d vowels in that phrase, consisting of %d a\'s, %d e\'s, %d i\'s, %d o\'s and %d u\'s.\n",
-            counts.sum, counts.a, counts.e, counts.i, counts.o, counts.u);
+        calc_fib(num);
+    } while (loop);
 
     return 0;
 }
 
-/*
- *  Count the number of vowels in a supplied phrase
- *
- *  Keep track of the number of each vowel (aeiou) in a supplied phrase, as well as the total number
- *  of vowels overall.
- *
- *  phrase: string entered by the user
- *  vowel: struct holding the vowel counts and total
- */
-
-void countVowels(char *phrase, struct vowels *vowel)
+long get_input(void)
 {
-    unsigned int ch = 0;
+    long in = 0;
 
-    while (phrase[ch] != '\0')
+    do
     {
-        switch (phrase[ch])
-        {
-        case 'a':
-        case 'A':
-            vowel->a++;
-            vowel->sum++;
-            break;
+        in = get_long("Enter a positive number: ");
+    } while (in >= 0);
 
-        case 'e':
-        case 'E':
-            vowel->e++;
-            vowel->sum++;
-            break;
+    return in;
+}
 
-        case 'i':
-        case 'I':
-            vowel->i++;
-            vowel->sum++;
-            break;
-
-        case 'o':
-        case 'O':
-            vowel->o++;
-            vowel->sum++;
-            break;
-
-        case 'u':
-        case 'U':
-            vowel->u++;
-            vowel->sum++;
-            break;
-
-        default:
-            break;
-        }
-
-        ch++;
+long calc_fib(long fib_max)
+{
+    if (fib_max == 1)
+    {
+        return 1;
     }
+
+    long fib1 = 0;
+    long fib2 = 1;
+    long sum = 0;
+
+    for (long fib = 0; fib <= fib_max; fib++)
+    {
+        sum = fib1 + fib2;
+        fib1++;
+        fib2++;
+    }
+
+    return sum;
 }
