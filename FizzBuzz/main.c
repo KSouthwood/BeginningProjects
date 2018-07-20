@@ -32,26 +32,35 @@ void fizzbuzz(int min, int max);
  *  with "Fizz", multiples of five with "Buzz" and multiples of three AND five with "FizzBuzz."
  */
 
-/*
- *  Main loop of program
+/***************
  *
- *  argc - number of arguments provided to program
- *  argv[] - array of arguments
+ *  Description: Main loop of program
+ *
+ *  Parameter(s):
+ *      argc - number of arguments provided to program
+ *      argv[] - array of arguments
+ *
+ *  Returns:
+ *      int to indicate success or failure
  */
 
 int main(int argc, char *argv[])
 {
     switch (argc)
     {
+        // no arguments given, so print from 1 to 100
         case 1:
             fizzbuzz(1, 100);
             break;
+        // two arguments, which we interpret as the number to count to
         case 2:
             fizzbuzz(1, atoi(argv[1]));
             break;
+        // three arguments, so we pass both values regardless of which is larger
         case 3:
             fizzbuzz(atoi(argv[1]), atoi(argv[2]));
             break;
+        // user didn't correctly enter arguments, print out usage instructions
         default:
             printf("Usage: %s [max]\n", argv[0]);
             printf("Usage: %s [min] [max]\n", argv[0]);
@@ -62,6 +71,17 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+/***************
+ *
+ *  Description: Counts from min to max inserting Fizz, Buzz or FizzBuzz as appropriate
+ *
+ *  Parameter(s):
+ *      min: the number to count from
+ *      max: the number to count to
+ *
+ *  Returns:
+ *      n/a
+ */
 void fizzbuzz(int min, int max)
 {
     // for loop won't work if max is larger than min, swap values
